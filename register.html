@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+    <div class="content_body">
+        <div class="t">注册会员</div>
+        <form action="">
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tbody>
+                <tr> 
+                    <th>用户名：</th>              
+                    <td><input name="username" type="text" size="25" id="username" placeholder="请输入用户名或手机号" required=true>
+                    <span id="username_notice"> *</span></td>
+                </tr>
+                <tr>
+                    <th>邮箱:</th>              
+                    <td>
+                        <input name="email" type="text" size="25" id="email">
+                        <span id="email_notice"> *</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>密码：</th>                
+                    <td>
+                        <input name="password" type="password" id="password1">
+                        <span id="password_notice"> *</span>
+                    </td>
+                </tr>
+            <tr>
+              <th>确认密码 :</th>               
+              <td>
+                  <input name="confirm_password" type="password" id="conform_password">
+                  <span id="conform_password_notice"> *</span>
+              </td>
+            </tr>
+            <tr>
+              <th>手机 :</th>               
+              <td>
+                  <input name="tel" type="tel" id="tel">
+                  <span id="tel_notice"> *</span>
+              </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td>
+                    <label class="checked">
+                    <input name="agreement" type="checkbox" value="1" checked="checked" class="checked">
+                    我已看过并接受《<a  style="color:blue" target="_blank">用户协议</a>》</label>
+                </td>
+              </tr>
+              <tr>
+                    <th></th>
+                    <td>
+                        <input value="同意协议并注册" name="Submit" class="agree" type="submit">
+                    </td>
+              </tr>           
+          </tbody>
+        </table>
+    </form>
+    <div class="want_login"> 我已有账号，我要登录<a href="#"  class="loginnow">马上登录</a>!</div>
+      </div>
+
+      <div class="footer-b">
+            Copyright ©2007 - 2017 湖北知音动漫有限公司版权所有 <br>
+            网址：www.zymkshop.com 备案号：鄂ICP备17018280号<br>
+            <div style="width:300px;margin:0 auto; padding:20px 0;">
+                <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42010602003555" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="images/beian.png" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">鄂公网安备 42010602003555号</p></a>
+            </div><a href="https://m.kuaidi100.com/" target="_blank">快递查询</a>
+    </div>
+</body>
+<script src="libs/jquery.js"></script> 
+<script src="libs/jquery.validate.js"></script>
+<script src="libs/jquery.validate.messages_zh.js"></script>
+<!-- 上一行是中文包 -->
+<script type="text/javascript">
+    
+    $("form").validate();
+    
+</script>
+</html>

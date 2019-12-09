@@ -9,7 +9,6 @@ $color: #FDB14F;
     bottom: 300px;
     z-index: 5;
     text-align: center;
-
     display: flex;
     flex-direction:column;
     li{width: 40px;height: 40px;line-height: 40px;border: 1px solid #eee;color:#fff;border-radius: 12px;background: $color; }
@@ -42,7 +41,7 @@ header{
             i{background-position:0 -62px;}
         }
         ul li{float: left;line-height:30px ;margin-left: 16px;
-                i{width: 20px;height: 20px;display:inline-block;background: url(images/scico.png)  no-repeat;margin-right: 8px;vertical-align: middle;
+                i{width: 20px;height: 20px;display:inline-block;background: url(../images/scico.png)  no-repeat;margin-right: 8px;vertical-align: middle;
                 }
             }
         }
@@ -69,11 +68,12 @@ nav {
             margin-top: 23px;
             border: solid 1px #ddd;overflow: hidden;border-radius: 7px;         
             input{float: left;height: 42px;width: 240px;}
-            .sub{float: left; background: #FDB14F url(images/search.png) no-repeat center ;height: 46px;width: 60px;border: none;
+            .sub{float: left; background: #FDB14F url(../images/search.png) no-repeat center ;height: 46px;width: 60px;border: none;
             }
         }           
     }
 }
+
 .banner{
     border-radius: 12px;
     background: pink;width: 1226px;height:460px;position: relative;
@@ -93,7 +93,7 @@ nav {
     border-bottom-left-radius: 12px;
     ul{position: relative;}
         ul li{
-            background: url(images/down.gif) no-repeat 83px 13px;
+            background: url(../images/down.gif) no-repeat 83px 13px;
             background-size:13px 13px ;
             padding: 0px 15px 0px 25px;
             line-height: 41px;
@@ -104,7 +104,7 @@ nav {
                 background: #fff;position: absolute;z-index: 4;top:-4px;left:100px; //??????
             }          
             &:hover{
-                background: $color - 30;
+                background: $color;
                      }
                 i{
                     width: 13px;
@@ -127,8 +127,8 @@ nav {
         cursor: pointer;
         background-repeat: no-repeat;
         opacity: 0.2;
-        #left{left:-120px;background:url(images/up.png);}
-        #right{right:-30px;background:url(images/down.png)}
+        #left{left:-120px;background:url(../images/up.png);}
+        #right{right:-30px;background:url(../images/down.png)}
         }   
     .btns input{
         width:30px;height:60px;;border: none;position: absolute;top:230px;
@@ -143,7 +143,7 @@ nav {
         }
         .fl{
             width:234px; height:171px;float: left;
-            background: url(images/right_nav.png) no-repeat center;
+            background: url(../images/right_nav.png) no-repeat center;
         }
         .fr{
             @extend .bt;
@@ -268,7 +268,7 @@ nav {
 
 
     footer{
-        background: #fff url(images/footer.png) no-repeat left top;
+        background: #fff url(../images/footer.png) no-repeat left top;
         background-size: cover;
         margin-top: 30px;
         height: 393px;
@@ -282,7 +282,7 @@ nav {
             color:#555;
             li a{
                 &:hover{
-                    color:$color - 50;
+                    color:$color;
                 }
             }       
         }  
@@ -297,12 +297,12 @@ nav {
                 .qq{
                     display: inline-block;
                     width: 33px;height: 28px;
-                    background: url(images/gg.png) no-repeat left;
+                    background: url(../images/gg.png) no-repeat left;
                 }
                 .wb{
                     width: 33px;height: 28px;
                     display: inline-block;
-                    background: url(images/gg.png) right;
+                    background: url(../images/gg.png) right;
                 }
             }
             p {

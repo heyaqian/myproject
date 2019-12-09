@@ -1,0 +1,76 @@
+body{background: #f5f5f5;}
+.container{background: #fff;
+    width: 400px;
+    margin:70px auto 0;
+    padding: 0px 30px 30px 30px;
+    .t{
+        line-height: 30px;
+        font-size: 20px;
+        text-align: center;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        margin-top: 70px;}
+        .logo{
+            img{width: 240px;height: 107px;display: block;margin:0 auto;}
+        }
+        table{
+            tbody{
+                tr{
+                    td{
+                        input{
+                            width: 402px;
+                            padding: 0px;
+                            text-indent: 10px;
+                            height: 40px;
+                            line-height: 40px;
+                            border: 1px solid #ddd;
+                            padding-left: 10px;
+                            font-size: 14px;
+                            margin:10px 0;
+                        }
+                        .login{
+                            color: #FFF;
+                            border: 0px;
+                            width: 402px;
+                            line-height: 45px;
+                            text-align: center;
+                            font-size: 20px;
+                            cursor: pointer;
+                            background-color: #FDB14F;
+                        }
+                        .remember{width: 13px;height: 13px;                        
+                        }
+                        .lab{color:#555;font-size: 14px;}
+                    }
+                }
+            }
+        }
+        .last{
+            font:12px/18px "";color:#555;
+            .forgetpw{float: left;}
+            .goreg{float: right;}
+        }
+        .otherlog{
+            background:url(../images/dian.gif) repeat-x center;
+            text-align: center;
+            margin-top: 15px;
+            font:12px/18px "";
+            color:#555;  
+            span{display:inline-block;width:110px;background:#fff;}       
+        }
+        .qq{
+            
+            text-align:center;
+            img{width:35px;height:35px;margin:15px 5px 0;}
+        }
+
+}
+
+.footer-b{
+    text-align: center;
+    line-height: 25px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    color: #666;
+    margin: auto;
+}

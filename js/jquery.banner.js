@@ -159,8 +159,7 @@
 			}
 		}		
 //		5.autoPlay为true，有自动轮播
-		if(this._obj_.autoPlay){
-			
+		if(this._obj_.autoPlay){			
 			this._obj_.t = setInterval(()=>{
 //				手动执行右按钮的事件处理函数,但是前提得先把右按钮的事件处理函数和相关功能单独封装出来
 				btnRight()
@@ -170,6 +169,7 @@
 			
 			this.hover(function(){
 				clearInterval(that._obj_.t);
+				// console.log(1);				
 			},function(){
 				that._obj_.t = setInterval(()=>{
 					

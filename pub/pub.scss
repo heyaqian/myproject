@@ -1,0 +1,106 @@
+$color: #FDB14F;
+header{
+    color: #FDB14F;font: 12px/30px "";height: 30px;padding-right: 11px;border-bottom:solid 2px #FDB14F;
+    a{color: #FDB14F;}
+    .top-l{float: left;width: 197.8px;
+        p{float: right;
+            span{padding:0 10px;cursor: pointer;}}
+    }
+    .top-r{float: right;cursor: pointer;
+        ul li.li4{
+            position: relative;
+            div{
+                z-index: 3;
+                right: 0px;
+                top: 30px;
+                position: absolute;
+                img{
+                    display: none;
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+            &:hover{
+                img{display: block;}
+            }
+            i{background-position:0 -62px;}
+        }
+        ul li{float: left;line-height:30px ;margin-left: 16px;
+                i{width: 20px;height: 20px;display:inline-block;background: url(../images/scico.png)  no-repeat;margin-right: 8px;vertical-align: middle;
+                }
+            }
+        }
+}
+nav {
+    height: 90px;
+    a{
+        display: block;float: left;
+        img{height: 85px;margin:5px 80px 0 0;}
+    }
+    p{float: left;
+        span{
+            padding-left: 25px;
+            padding-right: 25px;
+            line-height: 90px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+}
+
+footer{
+    background: #fff url(../images/footer.png) no-repeat left top;
+    background-size: cover;
+    margin-top: 30px;
+    height: 393px;
+    .footer-t{           
+        padding:27px 43px;
+        display: flex;
+        justify-content: space-around;
+        font-size: 16px;
+        line-height: 25px;
+        text-align: center;
+        color:#555;
+        li a{
+            &:hover{
+                color:$color;
+            }
+        }       
+    }  
+    .footer-c{
+        line-height: 30px;
+        color: #555;
+        padding: 0px;
+        margin: 0px;
+        list-style: none;
+        font-size: 14px;
+        .kefu {
+            .qq{
+                display: inline-block;
+                width: 33px;height: 28px;
+                background: url(../images/gg.png) no-repeat left;
+            }
+            .wb{
+                width: 33px;height: 28px;
+                display: inline-block;
+                background: url(../images/gg.png) right;
+            }
+        }
+        p {
+            margin-top: 20px;
+            font{
+                font-weight: bold;
+                color: #FF6700;
+                }
+        }
+    }
+    .footer-b{
+        text-align: center;
+        line-height: 25px;
+        padding-top: 15px;
+        padding-bottom: 30px;
+        color: #666;
+        margin: auto;
+    }
+}

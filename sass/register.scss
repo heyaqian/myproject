@@ -1,0 +1,75 @@
+html,body{background: #f5f5f5;text-align: center;}
+.content_body{height: 609px;margin: 0 auto;color: #555;
+    .t{
+        line-height: 30px;
+        font-size: 20px;
+        text-align: center;
+        padding-bottom: 10px;
+        padding-top: 20px;
+        margin-top: 70px;
+        
+        font-weight: bold;}
+        table{margin:0 auto;
+            tbody{
+                tr{
+                    th{
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        font-size: 16px;
+                        width: 25%;
+                        text-align: right;
+                        font-weight: normal;
+                        padding-right: 10px;
+                    }
+                    td{
+                        label{cursor: default;font-size: 14px;width: 50px;}
+                        input{
+                            width: 250px;
+                            height: 40px;
+                            line-height: 40px;
+                            border: 1px solid #ddd;
+                            padding-left: 10px;
+                            margin:10px 0;
+                            font-size: 14px;                          
+                        }
+                        input.checked{
+                            width: 13px;height: 13px;
+                            cursor: pointer;
+                            box-sizing: border-box;
+                            margin: 3px 3px 3px 4px;
+                        }
+                        input.agree{
+                            background-color: #FDB14F;
+                            border: 0px;
+                            width: 250px;
+                            line-height: 45px;
+                            height: 45px;
+                            text-align: center;
+                            font-size: 20px;
+                            color: #FFF;
+                            cursor: pointer;}
+                        span{
+                            display: inline-block;
+                            padding-top: 5px;
+                            color: #F00;
+                            width: 50px;
+                        }
+                    }
+                }
+              
+            }
+        }
+}
+
+.want_login{
+    clear: both;
+    text-align: center;
+    margin-top: 16px;}
+.footer-b{
+    text-align: center;
+    line-height: 25px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    color: #666;
+    margin: auto;
+}
