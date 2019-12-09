@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,dl,dd,fieldset,legend,input,textarea,select
+{margin:0;padding:0;}
+body{font:12px "微软雅黑";word-wrap:break-word;}
+a,u,s,del{color:#333;text-decoration:none;}
+fieldset,a img,.bor0 {border:0;}
+i,em,b{font-style:normal;font-weight:100;}
+li{list-style:none;}
+img{vertical-align:middle;}
+table{border-collapse:collapse;}
+
+/*首行缩进2个字*/
+.ind2{text-indent:2em;}
+
+/*文本溢出出现省略号*/
+.over{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/*图片垂直对齐*/
+.valign{text-align:center;}
+.valign img{vertical-align:middle;}
+.valign:after{content:"";vertical-align:middle;height:100%;display:inline-block;}
+
+.clear:before{content:"";display:table;}/*解决margin-top传递问题*/
+.clear:after{content:"";clear:both;display:block;}/*清除浮动*/
+
+
+
+
+
+
+
+
+
+
