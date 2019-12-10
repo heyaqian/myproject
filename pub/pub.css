@@ -1,3 +1,8 @@
+.margin {
+  margin: 0 auto;
+  width: 1226px;
+}
+
 header {
   color: #FDB14F;
   font: 12px/30px "";
@@ -94,6 +99,31 @@ nav p span {
   cursor: pointer;
   font-size: 16px;
   text-align: center;
+}
+
+nav .search {
+  float: right;
+}
+
+nav .search form {
+  margin-top: 23px;
+  border: solid 1px #ddd;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+nav .search form input {
+  float: left;
+  height: 42px;
+  width: 240px;
+}
+
+nav .search form .sub {
+  float: left;
+  background: #FDB14F url(../images/search.png) no-repeat center;
+  height: 46px;
+  width: 60px;
+  border: none;
 }
 
 footer {

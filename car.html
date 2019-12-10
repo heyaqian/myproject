@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="pub/pub.css">
+    <!-- <link rel="stylesheet" href="css/list.css"> -->
+    <link rel="stylesheet" href="css/car.css">
+    <script src="libs/jquery.js"></script>
+    <script src="js/cookie.js"></script>
+    <script src="js/ajax.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".top").load("http://localhost:82/pub/pub.html .top" );
+
+            $(".footer").load("http://localhost:82/pub/pub.html .footer" );           
+        });
+    </script>
+</head>
+<body>
+    <div class="top">
+
+    </div>
+
+    <table border="1" cellspacing="0" width="1000" align="center">
+			<thead>
+				<tr>
+                    <th>全选<input type="checkbox" id="check"></th>
+					<th>图片</th>
+					<th>名字</th>
+					<th>价格</th>
+                    <th>数量</th>
+                    <th>小计</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="5">购物车为空...<a href="list.html">去购物</a></td>
+				</tr>
+				<!--<tr>
+					<td><img src=""/></td>
+					<td></td>
+					<td></td>
+					<td><input type="number" min=1/></td>
+					<td class="delete">删除</td>
+				</tr>-->
+			</tbody>
+        </table>
+        <p>总件数:<span class="snum"></span>总计：<span class="smoney"></span><span class="alldelete">全删</span></p>
+
+
+     <div class="footer">
+
+    </div>
+</body>
+    <!-- <script>
+    class Car{
+        constructor(){
+            // 获取数据
+            this.url="http://localhost:82/data/goods-yz.json";
+            // 数据要放在tbody中
+            this.tbody=document.querySelector("tbody");
+            this.snum=document.querySelector(".snum");
+            this.smone=document.querySelector(".smoney");
+            this.ocheck=document.querySelector("#check");
+            this.alldel=document.querySelector(".alldelete");
+            // 既要读取cookie（只有id和num），也要读取ajax
+            this.xsum=0;
+            this.smoney=0;
+            this.Load();
+            this.addEvent();
+            // this.Check();
+        }
+        Load(){
+            ajaxGet(this.url,(res)=>{
+                this.res=JSON.parse(res);
+                this.getCookie();
+            })
+        }
+        getCookie(){
+            this.goods=getCookie("goodsDECookie")?JSON.parse(getCookie("goodsDECookie")):[];
+            // 渲染
+            this.display();
+            this.allcheck();
+            console.log(this.goods);
+        }
+        display(){
+            // 需要拿到ajax和cookie中的数据
+            // console.log(this.res,this.goods);
+            // 比较ajax(res)和cookie(goods)中的id,如果重复了,就要渲染,
+            var str="";
+            for(var i=0;i<this.res.length;i++){
+                for(var j=0;j<this.goods.length;j++){
+                    if(this.res[i].goodsId==this.goods[j].id){
+                        //判断复选框选中状态，选中就将页面的checkbox改为checked状态
+                        if(this.goods[j].check==1){
+                            //将checked赋值给变量，在渲染时加入行内
+                            this.check='checked';
+                        //判断选中时就在总金额和总件数加上该商品的小计和件数(后面记得清空)
+                            this.smoney+=parseInt(this.goods[j].num)*this.res[i].price;
+                            this.xsum+=parseInt(this.goods[j].num)
+                        }else{
+                            this.check='';
+                        }
+                        var xsum=this.res[i].price*this.goods[j].num;
+                        str+=`<tr index="${this.res[i].goodsId}">
+                                <td ><input type="checkbox" class="check" ${this.check}/></td>
+                                <td><img src="${this.res[i].img}"/></td>
+                                <td>${this.res[i].name}</td>
+                                <td>${this.res[i].price}</td>
+                                <td><input type="number" min=1 class="inn" value="${this.goods[j].num}"/></td>
+                                <td class="xsum">${xsum}</td>
+                                <td class="delete">删除</td>
+                            </tr>`;
+                    }
+                }
+            }
+            //将金额件数插入页面中
+            this.snum.innerHTML=this.xsum;
+            this.smone.innerHTML=this.smoney;
+            //清空总件数和总金额的值，否则取消后二次选中会金额件数叠加
+            this.xsum = 0;
+            this.smoney = 0;
+            // 插入表格中
+            this.tbody.innerHTML=str;
+        }
+        addEvent(){
+            var that=this;
+            this.tbody.addEventListener("click",function(eve){
+                var e=eve || window.event;
+                var target= e.target || e.srcElement;
+                //判断点击是否为删除
+                if(target.className=="delete"){
+                    that.id=target.parentNode.getAttribute("index");
+                    target.parentNode.remove();
+                    that.changeCookie(function(i){
+                        that.goods.splice(i,1);
+                    });
+                }
+                //判断点击是否为复选框
+                if(target.className=="check"){
+                    that.id=target.parentNode.parentNode.getAttribute("index");
+                    //判断复选框的状态，如果是选中，就改变check值为1
+                    if(target.checked){
+                        that.changeCookie(function(i){
+                            that.goods[i].check=1;
+                        })
+                    }else{
+                        //取消就改变check值为0
+                        that.changeCookie(function(i){
+                            that.goods[i].check=0;
+                        })
+                    }
+                }
+                // 判断是否复选框是否全被选中
+                var type=that.goods.every((val,idx)=>{
+                        return val.check==1;
+                    })
+                    if(type){
+                    //全选中的话，全选的框勾上
+                        that.ocheck.checked=true;
+                    }else{
+                    //不是全选中的话，全选的框取消选选中
+                        that.ocheck.checked=false;
+                    }
+                setCookie("goodsDECookie",JSON.stringify(that.goods));
+                that.display();
+            })
+            //监听在购物车页面改变购买数量
+            this.tbody.addEventListener("input",function(eve){
+                var e=eve || window.event;
+                var target= e.target || e.srcElement;
+                //判断是否是记录数量的框
+                if(target.className=="inn"){
+                    that.id=target.parentNode.parentNode.getAttribute("index");
+                    // that.val=target.value;
+                    // console.log(target.parentNode.nextElementSibling);
+                    target.parentNode.nextElementSibling.innerHTML=target.value*target.parentNode.previousElementSibling.innerHTML;
+                    that.changeCookie(function(i){
+                        that.goods[i].num=target.value;
+                    });
+                }
+            })
+            //点击全删，清空cookie，渲染页面
+            this.alldel.onclick=function(){
+                that.goods=[];
+                setCookie("goodsDECookie",JSON.stringify(that.goods));
+                that.display();
+            }
+
+        }
+        allcheck(){
+            var that=this;
+            var acheck=document.querySelectorAll(".check");
+            console.log(acheck);
+            this.ocheck.onclick=function(){
+                if(this.checked){
+                    for(var i=0;i<acheck.length;i++){
+                        that.goods[i].check=1;
+                        acheck[i].checked=true;
+                    }
+                }else{
+                    for(var i=0;i<acheck.length;i++){
+                        that.goods[i].check=0;
+                        acheck[i].checked=false;
+                    }
+                }
+                setCookie("goodsDECookie",JSON.stringify(that.goods));
+                that.display();
+            }
+        }
+        changeCookie(cb){
+            for(var i=0;i<this.goods.length;i++){
+                if(this.id==this.goods[i].id){
+                    cb(i);
+                    break;
+                }
+            }
+            setCookie("goodsDECookie",JSON.stringify(this.goods));
+        }
+    }
+    new Car;
+</script> -->
+</html>

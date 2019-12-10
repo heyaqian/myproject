@@ -7,6 +7,7 @@ html, body {
   height: 609px;
   margin: 0 auto;
   color: #555;
+  width: 688px;
 }
 
 .content_body .t {
@@ -24,6 +25,7 @@ html, body {
 }
 
 .content_body table tbody tr th {
+  margin-left: 200px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 16px;
@@ -33,9 +35,13 @@ html, body {
   padding-right: 10px;
 }
 
+.content_body table tbody tr td {
+  position: relative;
+}
+
 .content_body table tbody tr td label {
   cursor: default;
-  font-size: 14px;
+  font-size: 16px;
   width: 50px;
 }
 
@@ -58,6 +64,7 @@ html, body {
 }
 
 .content_body table tbody tr td input.agree {
+  padding: 0;
   background-color: #FDB14F;
   border: 0px;
   width: 250px;
@@ -71,15 +78,19 @@ html, body {
 
 .content_body table tbody tr td span {
   display: inline-block;
+  width: 100px;
   padding-top: 5px;
-  color: #F00;
-  width: 50px;
+  color: #f00;
 }
 
 .want_login {
   clear: both;
   text-align: center;
   margin-top: 16px;
+}
+
+.want_login .loginnow {
+  color: #FDB14F;
 }
 
 .footer-b {

@@ -1,4 +1,5 @@
 $color: #FDB14F;
+.margin{margin:0 auto;width:1226px;}
 header{
     color: #FDB14F;font: 12px/30px "";height: 30px;padding-right: 11px;border-bottom:solid 2px #FDB14F;
     a{color: #FDB14F;}
@@ -46,6 +47,16 @@ nav {
             font-size: 16px;
             text-align: center;
         }
+    }
+    .search{
+        float: right;
+        form{ 
+            margin-top: 23px;
+            border: solid 1px #ddd;overflow: hidden;border-radius: 7px;         
+            input{float: left;height: 42px;width: 240px;}
+            .sub{float: left; background: #FDB14F url(../images/search.png) no-repeat center ;height: 46px;width: 60px;border: none;
+            }
+        }           
     }
 }
 

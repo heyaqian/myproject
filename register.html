@@ -16,27 +16,28 @@
             <tbody>
                 <tr> 
                     <th>用户名：</th>              
-                    <td><input name="username" type="text" size="25" id="username" placeholder="请输入用户名或手机号" required=true>
-                    <span id="username_notice"> *</span></td>
+                    <td><input name="username" type="text" size="25" id="user" placeholder="请输入用户名或手机号">
+                    <span id="username"> *</span>
+                    </td>
                 </tr>
                 <tr>
                     <th>邮箱:</th>              
                     <td>
-                        <input name="email" type="text" size="25" id="email">
-                        <span id="email_notice"> *</span>
+                        <input name="email" type="text" size="25" id="email" >
+                        <span id="email_notice"> *</span>                      
                     </td>
                 </tr>
                 <tr>
                     <th>密码：</th>                
                     <td>
-                        <input name="password" type="password" id="password1">
+                        <input name="password" type="password" id="pass" >
                         <span id="password_notice"> *</span>
                     </td>
                 </tr>
             <tr>
               <th>确认密码 :</th>               
               <td>
-                  <input name="confirm_password" type="password" id="conform_password">
+                  <input name="confirm_password" type="password" id="repass">
                   <span id="conform_password_notice"> *</span>
               </td>
             </tr>
@@ -58,13 +59,13 @@
               <tr>
                     <th></th>
                     <td>
-                        <input value="同意协议并注册" name="Submit" class="agree" type="submit">
+                        <input value="同意协议并注册" name="Submit" class="agree" type="submit" id="register"><span id=""> </span>
                     </td>
               </tr>           
           </tbody>
         </table>
     </form>
-    <div class="want_login"> 我已有账号，我要登录<a href="#"  class="loginnow">马上登录</a>!</div>
+    <div class="want_login"> 我已有账号，我要登录<a href="login.html"  class="loginnow">马上登录</a>!</div>
       </div>
 
       <div class="footer-b">
@@ -75,13 +76,127 @@
             </div><a href="https://m.kuaidi100.com/" target="_blank">快递查询</a>
     </div>
 </body>
-<script src="libs/jquery.js"></script> 
-<script src="libs/jquery.validate.js"></script>
-<script src="libs/jquery.validate.messages_zh.js"></script>
-<!-- 上一行是中文包 -->
-<script type="text/javascript">
-    
-    $("form").validate();
-    
+<script>
+class register{
+    constructor(){        
+        this.email=document.getElementById("email");
+        this.user=document.getElementById("user");
+        this.pass=document.getElementById("pass");
+        this.repass=document.getElementById("repass");
+        this.register=document.getElementById("register");
+        this.tel=document.getElementById("tel")
+        // this.n=this.b=this.s=0;   
+        this.addEvent();
+    }
+    addEvent(){
+        var that=this;
+        that.user.oninput = function(){
+            console.log(1);           
+        var reg = /^[\u2E80-\u9FFF\w\-]{4,20}$/;
+        if(reg.test(that.user.value)){
+            that.user.nextElementSibling.innerHTML = "用户名正确";
+            // u = true;
+        }else{
+            that.user.nextElementSibling.innerHTML = "用户名不正确";
+            // u = false;
+            }
+        }
+        
+        that.pass.oninput=function(){
+            var reg=/\d/;
+            var reg1=/[a-z]/i;
+            var reg2=/[^\da-z]/i;       
+            if(reg.test(that.pass.value)){
+                that.n=1;
+            }    
+            if(reg1.test(that.pass.value)){
+                that.s=1;
+            }    
+            if(reg2.test(that.pass.value)){
+                that.b=1;
+            }    
+            switch(that.n+that.s+that.b){
+            case 1:that.pass.nextElementSibling.innerHTML="简单"; break;
+            case 2:that.pass.nextElementSibling.innerHTML="一般";break;
+            case 3:that.pass.nextElementSibling.innerHTML="困难";break;
+            }
+            if(that.repass.value == "") return;
+        if(that.pass.value == that.repass.value){
+            that.repass.nextElementSibling.innerHTML = "一致";
+            // p2 = true;
+        }else{
+            that.repass.nextElementSibling.innerHTML = "不一致";
+            // p2 = false;
+        }
+    }
+    this.repass.oninput = function(){
+        if(that.pass.value == that.repass.value){
+            that.repass.nextElementSibling.innerHTML = "一致";
+            // p2 = true;
+        }else{
+            that.repass.nextElementSibling.innerHTML = "不一致";
+            // p2 = false;
+        }
+    }
+    this.email.oninput=function(){
+        //邮箱：数字字母开头，中间可以多个数字字母下划线“-”；
+        //2.中间@加数字或字母；3，“.”加数字或字母；
+        // var reg=/^(\+86)?1\d{10}$/;
+    var reg=/^[\da-zA-Z][\w-]+@[\da-z]+\.[\da-z]+$/;
+    if(reg.test(this.value)){
+        this.nextElementSibling.innerHTML="正确";
+        // e=1;
+    }else{
+        this.nextElementSibling.innerHTML="不正确";
+        }
+    }   
+    this.tel.oninput=function(){
+        var reg=/^(\+86)?1\d{10}$/;
+    if(reg.test(this.value)){
+        this.nextElementSibling.innerHTML="正确";
+        // e=1;
+    }else{
+        this.nextElementSibling.innerHTML="不正确";
+        }
+    }   
+        this.register.onclick=function(){
+            that.u=that.user.value;
+            that.p=that.pass.value;
+            that.setMsg();
+            // console.log(1);
+        }
+    }
+    setMsg(){
+        var that=this;
+            ajaxPost("http://127.0.0.1:82/api",function(res){
+                that.res=JSON.parse(res);
+                console.log(that.res);
+                that.span.innerHTML=that.res.msg;
+            },{
+                type:"register",
+                user:this.u,
+                pass:this.p
+            })
+                }
+            }
+            
+            new register;      	
+            function ajaxPost(url,cb,data){
+                var str = "";
+                for(var i in data){
+                    str += `${i}=${data[i]}&`;
+                }
+                str = str.slice(0,str.length-1)
+                var ajax = new XMLHttpRequest();
+                ajax.open("post",url,true);
+                ajax.onreadystatechange = function(){
+                    if(ajax.readyState === 4 && ajax.status === 200){
+                        cb(ajax.responseText);
+                    }
+                }
+                ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                ajax.send(str);
+            }
+            
 </script>
 </html>

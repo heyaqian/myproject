@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/public.css"> 
 </head>
 <body>
   <!-- <div class="lc"> -->
@@ -24,10 +24,9 @@
     <script src="libs/jquery.js"></script>
     <script type="text/javascript">
         $(function(){
-            $(".top").load("http://localhost:82/pub/pub.html .top" );
+            $(".top").load("http://localhost:82/pub/pub.html .top" )
 
             $(".footer").load("http://localhost:82/pub/pub.html .footer" );
-            // $(".lc").load("http://localhost:82/pub/pub.html .footer" );
         });
     </script>
 
@@ -256,6 +255,7 @@
 <script src="js/jquery.banner.js"></script>
 <script>
     $(".menu").find("li").mouseover(function(){
+        // console.log($(".menu"));     
 			$(this)
 			.children("div")
 			.stop()

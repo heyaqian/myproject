@@ -17,12 +17,12 @@
         <tr>
             <td>
                 <div class="inputWrap">
-                    <input class="username" name="username"  placeholder="请输入用户名或手机号" type="text">
+                    <input class="username" name="username"  placeholder="请输入用户名或手机号" type="text" id="user">
                 </div>
             </td>
         </tr>
         <tr>
-            <td><input class="f_input" name="password" placeholder="密码" type="password"></td>
+            <td><input class="f_input" name="password" placeholder="密码" type="password" id="pass"></td>
         </tr>
         <tr>
             <td>
@@ -32,14 +32,14 @@
         </tr>
         <tr>
             <td>
-                <input class="login" name="submit" value="登 录" type="submit">
+                <input class="login" name="submit" value="登 录" type="submit" id="login">
             </td>
         </tr>
     </tbody>
 </table>
     <div class="last">
         <div class="forgetpw">忘记密码？</div>
-        <div class="goreg">去注册</div>
+        <div class="goreg" id="register">去注册</div>
     </div>
     <div class="otherlog"><span>其他登录方式</span></div>
     <div class="qq">
@@ -56,4 +56,57 @@
     </div><a href="https://m.kuaidi100.com/" target="_blank">快递查询</a>
 </div>
 </body>
+<script>
+class login{
+    constructor(){        
+        this.user=document.getElementById("user");
+        this.pass=document.getElementById("pass");
+        this.login=document.getElementById("login");
+        this.register=document.getElementById("register");
+      
+        this.addEvent();
+    }
+    addEvent(){
+        var that=this;
+        this.register.onclick=function(){
+            location.href="register.html";
+            console.log(1);          
+        }
+        this.login.onclick=function(){
+            that.u=that.user.value;
+            that.p=that.pass.value;
+            that.getMsg();
+        }
+    }
+    getMsg(){
+        var that=this;
+                ajaxGet("http://127.0.0.1:82/api",function(res){
+                    that.res=JSON.parse(res)
+                    console.log(that.res);
+                },{
+                    type:"login",
+                    user:this.u,
+                    pass:this.p
+                })
+				}
+			}			
+			new login;      	
+        	function ajaxGet(url,cb,data){
+				data = data || {};
+				var str = "";
+				for(var i in data){
+					str = str + i+"="+data[i]+"&";
+				}
+				var d = new Date();
+				url = url + "?" + str + "__qft="+d.getTime();
+				var xhr = new XMLHttpRequest();
+				xhr.open("get",url,true);
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState == 4 && xhr.status == 200){
+						cb(xhr.responseText);
+					}
+				}
+				xhr.send();
+            }
+ </script>
 </html>

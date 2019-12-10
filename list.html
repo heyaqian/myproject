@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="pub/pub.css">
+    <link rel="stylesheet" href="css/list.css">
+</head>
+<body>
+    <div class="top">
+
+    </div>
+    <script src="libs/jquery.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".top").load("http://localhost:82/pub/pub.html .top" );
+
+            $(".footer").load("http://localhost:82/pub/pub.html .footer" );           
+        });
+    </script>
+        <div id="list">
+            <div class="margin clear list">
+                <!-- <div>
+                    <img src="images/1124_thumb_G_1536564320165.jpg" alt="">
+                    <p class="name">【订阅专拍】《漫客小说绘》按月订购（请仔细阅读详情页后再下单）</p>
+                    <p class="price">￥：60.00</p>
+                    <p class="addcar">加入购物车</p>
+                </div> -->
+            </div>
+        </div>
+    <div class="footer">
+
+    </div>
+</body>
+<script src="js/ajax.js"></script>
+<script src="js/cookie.js"></script>
+<script>
+    class list{
+        constructor(){
+            this.cont=document.querySelector(".list");
+            // console.log(this.cont);         
+            this.url="http://localhost:82/data/goods-yz.json";
+            this.load();
+            this.addEvent();
+        }
+        load(){
+            var that=this;
+            ajaxGet(this.url,function(res){
+                console.log(JSON.parse(res));
+                that.res=JSON.parse(res);
+                that.display();
+            })
+        }
+        display(){
+            var str="";
+            for(var i=0;i<this.res.length;i++){
+                //q 下面少写了index
+                str+=`<div class="box" index="${this.res[i].goodsId}">
+                            <img src="${this.res[i].url}" alt="">
+                            <p class="name">${this.res[i].name}</p>
+                            <p class="price">${this.res[i].price}</p>
+                            <p class="addcar">加入购物车</p>
+                        </div>`                            
+            }
+            this.cont.innerHTML=str;
+        }
+        addEvent(){
+            var that=this;
+            //页面初始没有按钮em，所有要用事件委托，将事件监听绑定给父元素cont
+            this.cont.addEventListener("click",function(eve){
+                var e=eve || window.event;
+                var target=e.target || e.srcElement;               
+                // console.log(target);              
+                // 判断点击的是否是em
+                if(target.className=="addcar"){
+                    // // 根据所点击的em找到它爸爸div身上存储goodsId的index属性，用来定位所选商品
+                    that.id=target.parentNode.getAttribute("index");
+                    // // 把点击的数据存储到cookie中，让下个页面获取
+                    that.setCookie();
+                    // console.log(target);                   
+                }
+            })
+        }
+        setCookie(){
+            // 判断是否是第一次加入购物车，没有值就给空数组，有就解析 
+            this.goods=getCookie("goodsDECookie")? JSON.parse(getCookie("goodsDECookie")):[];
+            // 如果length<1，代表没有数据,没有数据没办法遍历，所以要判断，是第一次加入，直接加入
+            if(this.goods.length<1){
+                // 将数据存入数组内，存商品的id和数量
+                this.goods.push({
+                    id:this.id,
+                    num:1,
+                    check:0
+                })
+            }else{ 
+                //方法一
+                // 设置状态
+                // var onoff=true;
+                // 遍历已经存储的数据，比较id，如果发现重复就把状态改为false并且将num++，没有重复就存储id，num为1
+                // for(var i=0;i<this.goods.length;i++){
+                //     if(this.goods[i].id===this.id){ 
+                //         this.goods[i].num++;
+                //         onoff=false;
+                //     }
+                // }
+                // if(onoff){
+                //     this.goods.push({
+                //         id:this.id,
+                //         num:1
+                //     })
+                // }
+                //方法二
+                var i=0;
+                var onoff=this.goods.some((val,idx)=>{
+                    i=idx;
+                    return val.id===this.id;
+                })
+                if(!onoff){
+                    this.goods.push({
+                        id:this.id,
+                        num:1,
+                        check:0
+                    })
+                }else{
+                    this.goods[i].num++;
+                }
+            }
+            // 操作完获取的cookie之后，再将cookie塞进去
+            setCookie("goodsDECookie",JSON.stringify(this.goods))
+        }
+    }
+    new list;
+    </script>
+</html>
