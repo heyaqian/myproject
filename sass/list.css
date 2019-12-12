@@ -2,6 +2,7 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
 .list div {
@@ -25,7 +26,7 @@
 .list div p.name, .list div p.price {
   white-space: nowrap;
   overflow: hidden;
-  width: 192px;
+  width: 199px;
   text-align: center;
   font: 12px/22px "";
   color: #333;
@@ -55,4 +56,49 @@
 .list div img {
   width: 160px;
   height: 160px;
+}
+
+.pagWarp {
+  background: #FDB14F;
+  margin-top: 30px;
+  height: 40px;
+  box-shadow: 0 2px 5px #b6b6b6;
+  position: absolute;
+  border-radius: 2px;
+  right: 42%;
+  top: 430px;
+}
+
+.pagWarp ul {
+  height: 40px;
+  margin: 0 auto;
+  float: left;
+  text-align: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.pagWarp ul li {
+  float: left;
+  text-align: center;
+  line-height: 40px;
+  padding: 0 4px;
+}
+
+.pagWarp ul .active {
+  color: #99f;
+  font-size: 30px;
+}
+
+#btnL, #btnR {
+  line-height: 40px;
+  cursor: pointer;
+}
+
+#btnL {
+  float: left;
+}
+
+#btnR {
+  float: right;
 }

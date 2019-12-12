@@ -20,7 +20,7 @@
                     <span id="username"> *</span>
                     </td>
                 </tr>
-                <tr>
+                <tr>    
                     <th>邮箱:</th>              
                     <td>
                         <input name="email" type="text" size="25" id="email" >
@@ -59,7 +59,7 @@
               <tr>
                     <th></th>
                     <td>
-                        <input value="同意协议并注册" name="Submit" class="agree" type="submit" id="register"><span id=""> </span>
+                        <input value="同意协议并注册" name="Submit" class="agree" type="button" id="register"><span id="reg"> </span>
                     </td>
               </tr>           
           </tbody>
@@ -67,7 +67,6 @@
     </form>
     <div class="want_login"> 我已有账号，我要登录<a href="login.html"  class="loginnow">马上登录</a>!</div>
       </div>
-
       <div class="footer-b">
             Copyright ©2007 - 2017 湖北知音动漫有限公司版权所有 <br>
             网址：www.zymkshop.com 备案号：鄂ICP备17018280号<br>
@@ -76,6 +75,7 @@
             </div><a href="https://m.kuaidi100.com/" target="_blank">快递查询</a>
     </div>
 </body>
+<script src="js/cookie.js"></script>
 <script>
 class register{
     constructor(){        
@@ -84,7 +84,8 @@ class register{
         this.pass=document.getElementById("pass");
         this.repass=document.getElementById("repass");
         this.register=document.getElementById("register");
-        this.tel=document.getElementById("tel")
+        this.tel=document.getElementById("tel");
+        this.span=document.getElementById("reg");
         // this.n=this.b=this.s=0;   
         this.addEvent();
     }
@@ -161,42 +162,50 @@ class register{
     }   
         this.register.onclick=function(){
             that.u=that.user.value;
-            that.p=that.pass.value;
+            that.p=that.pass.value;          
             that.setMsg();
             // console.log(1);
         }
     }
     setMsg(){
-        var that=this;
-            ajaxPost("http://127.0.0.1:82/api",function(res){
-                that.res=JSON.parse(res);
-                console.log(that.res);
-                that.span.innerHTML=that.res.msg;
-            },{
-                type:"register",
+//	数据格式:[{user:"admin",pass:"123",onoff:0},{...},{...},...]
+				
+        this.msg = getCookie("userMsg") ? JSON.parse(getCookie("userMsg")) : [];
+//				第一个用户
+        if(this.msg.length<1){
+            this.msg.push({
                 user:this.u,
-                pass:this.p
+                pass:this.p,
+                onoff:0
             })
-                }
+            this.success();
+        }else{
+//				非第一个用户
+//					重名了
+            var type = this.msg.some((val,idx)=>{
+                return val.user === this.u;
+            });
+            if(type){
+                this.span.innerHTML = "用户名重复";
+            }else{
+//					没重名,直接注册
+                this.msg.push({
+                    user:this.u,
+                    pass:this.p,
+                    onoff:0
+                })
+                this.success();
             }
-            
-            new register;      	
-            function ajaxPost(url,cb,data){
-                var str = "";
-                for(var i in data){
-                    str += `${i}=${data[i]}&`;
-                }
-                str = str.slice(0,str.length-1)
-                var ajax = new XMLHttpRequest();
-                ajax.open("post",url,true);
-                ajax.onreadystatechange = function(){
-                    if(ajax.readyState === 4 && ajax.status === 200){
-                        cb(ajax.responseText);
-                    }
-                }
-                ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-                ajax.send(str);
-            }
-            
+        }
+        setCookie("userMsg",JSON.stringify(this.msg));
+    }
+    success(){
+        this.span.innerHTML = "注册成功，5秒后<a href='login.html'>跳转到登录</a>";
+        setTimeout(()=>{
+            location.href = "login.html";
+        },5000)
+    }
+    }          
+    new register;      	
 </script>
 </html>

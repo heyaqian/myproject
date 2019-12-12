@@ -1,14 +1,14 @@
 .margin{margin:0 auto;width:1226px;}
 $color: #FDB14F;
-.lc{
-    cursor: pointer;
+.lc{             
+    cursor: pointer; 
     width: 40px;
     height:166px;
     position: fixed;
     right: 40px;
-    bottom: 300px;
+    bottom: 300px;              
     z-index: 5;
-    text-align: center;
+    text-align: center;             
     display: flex;
     flex-direction:column;
     li{width: 40px;height: 40px;line-height: 40px;border: 1px solid #eee;color:#fff;border-radius: 12px;background: $color; }
@@ -186,7 +186,7 @@ nav {
             p.name{white-space:nowrap;overflow:hidden;width: 192px;text-align: center;font:12px/22px "";color:#333;padding:15px 0 0;&:hover{color:#FDB14F;}}
             p.price{@extend p.name;color:#FDB14F;padding:6px;}
             img{width: 160px;height: 160px;}
-            
+           
         }
     }
     main{
@@ -221,7 +221,7 @@ nav {
                     height: 300px;display:flex;justify-content:space-around;
                     .box{width: 234px;height: 300px;background: #fff;box-sizing: border-box;
                         cursor: pointer;border-radius: 12px;padding: 30px 20px 20px 20px;
-                        text-align: center;
+                        text-align: center;margin-left:12px;
                         img{width: 150px;height: 150px;}
                         p.name{white-space:nowrap;overflow:hidden;width: 192px;text-align: center;font:12px/22px "";color:#333;padding:15px 0 0;&:hover{color:#FDB14F;}}
                         p.price{@extend p.name;color:#FDB14F;padding:6px;}

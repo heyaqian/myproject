@@ -16,13 +16,13 @@
     <script src="libs/jquery.js"></script>
     <script type="text/javascript">
         $(function(){
-            $(".top").load("http://localhost:82/pub/pub.html .top" );
+            $(".top").load("http://localhost:81/pub/pub.html .top" );
 
-            $(".footer").load("http://localhost:82/pub/pub.html .footer" );           
+            $(".footer").load("http://localhost:81/pub/pub.html .footer" );           
         });
     </script>
         <div id="list">
-            <div class="margin clear list">
+            <div class="margin clear list" id="list">
                 <!-- <div>
                     <img src="images/1124_thumb_G_1536564320165.jpg" alt="">
                     <p class="name">【订阅专拍】《漫客小说绘》按月订购（请仔细阅读详情页后再下单）</p>
@@ -31,6 +31,15 @@
                 </div> -->
             </div>
         </div>
+        <!-- <ul class="list" id="list">    
+            </ul> -->
+            <div class="pagWarp" id="pageWarp">
+                <li id="btnL">上一页</li>
+                <ul id="ull">
+                </ul>
+                <li id="btnR">下一页</li>
+            </div>
+
     <div class="footer">
 
     </div>
@@ -41,10 +50,16 @@
     class list{
         constructor(){
             this.cont=document.querySelector(".list");
-            // console.log(this.cont);         
-            this.url="http://localhost:82/data/goods-yz.json";
+            // console.log(this.cont);   
+            this.left=document.getElementById("btnL");
+            this.right=document.getElementById("btnR");     
+            this.pageCont=document.getElementById("ull")
+            this.url="http://localhost:81/data/goods-yz.json";           
+            this.index=1;
+            this.num=4;
             this.load();
             this.addEvent();
+            this.addEvent2();
         }
         load(){
             var that=this;
@@ -52,18 +67,70 @@
                 console.log(JSON.parse(res));
                 that.res=JSON.parse(res);
                 that.display();
+                that.createPage()
+                // console.log(1);
             })
         }
+        createPage(){            
+        this.maxNum=Math.ceil(this.res.length/this.num);
+        // console.log(this.maxNum);      
+        var str="";
+        for(var i=0;i<this.maxNum;i++){
+            str+=`<li>${i+1}</li>`
+        }
+        this.pageCont.innerHTML=str;
+        this.setActive();
+    }
+  
+        addEvent2(){
+        var that=this;
+        this.right.onclick=function(){
+          that.changeIndexR();
+        }   
+        this.left.onclick=function(){
+          that.changeIndexL();
+        }
+    }
+    changeIndexR(){
+        if(this.index==this.maxNum-1){
+                this.index=0;
+            }else{
+                this.index++;
+            }
+            this.display();
+            this.setActive();
+    }
+    changeIndexL(){
+        if(this.index==0){
+                this.index=this.maxNum-1;
+            }else{
+                this.index--;
+            }
+            this.display();
+            this.setActive();
+    }
+    setActive(){       
+        for(var i=0;i<this.maxNum;i++){
+            this.pageCont.children[i].className="";
+        }
+        // console.log(this.pageCont.children[i]);
+        console.log(this.index);
+        
+        this.pageCont.children[this.index].className="active";
+
+    }
         display(){
             var str="";
-            for(var i=0;i<this.res.length;i++){
-                //q 下面少写了index
-                str+=`<div class="box" index="${this.res[i].goodsId}">
+            for(var i=this.index*this.num;i<(this.index+1)*this.num;i++){
+                if(i<this.res.length){
+                    str+=`<div class="box" index="${this.res[i].id}">
                             <img src="${this.res[i].url}" alt="">
                             <p class="name">${this.res[i].name}</p>
                             <p class="price">${this.res[i].price}</p>
                             <p class="addcar">加入购物车</p>
-                        </div>`                            
+                        </div>`             
+                }
+                //q 下面少写了index                           
             }
             this.cont.innerHTML=str;
         }
@@ -82,7 +149,13 @@
                     that.setCookie();
                     // console.log(target);                   
                 }
-            })
+                // console.log(target.tagName);              
+                if(target.tagName=="IMG"){
+                    that.id=target.parentNode.getAttribute("index");
+                    location.href="detail.html";
+                    // console.log(2);                  
+                }
+            })               
         }
         setCookie(){
             // 判断是否是第一次加入购物车，没有值就给空数组，有就解析 
@@ -95,24 +168,8 @@
                     num:1,
                     check:0
                 })
-            }else{ 
-                //方法一
-                // 设置状态
-                // var onoff=true;
-                // 遍历已经存储的数据，比较id，如果发现重复就把状态改为false并且将num++，没有重复就存储id，num为1
-                // for(var i=0;i<this.goods.length;i++){
-                //     if(this.goods[i].id===this.id){ 
-                //         this.goods[i].num++;
-                //         onoff=false;
-                //     }
-                // }
-                // if(onoff){
-                //     this.goods.push({
-                //         id:this.id,
-                //         num:1
-                //     })
-                // }
-                //方法二
+            }else{
+                //有第二种方法，参考自己的案例 
                 var i=0;
                 var onoff=this.goods.some((val,idx)=>{
                     i=idx;
@@ -133,5 +190,7 @@
         }
     }
     new list;
+
+  
     </script>
 </html>

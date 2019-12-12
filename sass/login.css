@@ -59,6 +59,7 @@ body {
 }
 
 .container .last {
+  cursor: pointer;
   font: 12px/18px "";
   color: #555;
 }

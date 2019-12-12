@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="pub/pub.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <script src="libs/jquery.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".top").load("http://localhost:81/pub/pub.html .top" );
+
+            $(".footer").load("http://localhost:81/pub/pub.html .footer" );           
+        });
+    </script>
+</head>
+<body>
+    <div class="top">
+
+    </div>
+  
+    <!-- <div class="margin clear pic" id="list">
+    <div class="t">
+        <div class="t-l">
+            <img src="images/1543476139490530174.jpg" alt="" class="smallimg">
+            <div class="big">
+                <img src="images/1543476139490530174.jpg" alt="" class="bigimg">
+            </div>
+        </div>
+        <div class="t-r"></div>
+    </div>
+    </div> -->
+    <div class="margin clear pic" id="list">
+        <div class="sBox">
+			<img src="images/1550564293201665977.jpg"/>
+			<span></span>
+		</div>
+		<div class="bBox">
+			<img src="images/1550564293201665977.jpg"/>
+		</div>
+        <div class="t-r">
+            <p class="t-r-t">大唐司天监.贰 萧十一狼 赠海报 收录未发表篇 漫客小说绘传奇</p>
+            <p class="t-r-t-price">￥36.80</p>
+            <p class="t-r-t-addCar">加入购物车</p>
+        </div>
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+<script src="js/ajax.js"></script>
+<script type="text/javascript">
+    class Magnifier{
+        constructor(){
+            this.sBox = document.querySelector(".sBox");
+            this.sImg = document.querySelector(".sBox img");
+            this.sSpan = document.querySelector(".sBox span");
+            this.bBox = document.querySelector(".bBox");
+            this.bImg = document.querySelector(".bBox img");            
+            this.init();
+            // this.load();
+        }
+        // load(){
+        //     ajaxGet(this.url,(res)=>{
+        //         this.res=JSON.parse(res);
+        //         this.getCookie();
+        //     })
+        // }
+        // getCookie(){
+        //     this.goods=getCookie("goodsDECookie")?JSON.parse(getCookie("goodsDECookie")):[];
+        //     // 渲染
+        //     console.log(this.goods);            
+        //     this.display();
+        //     // this.allcheck();
+        // }
+        // display(){
+        //     var str="";
+        //     for(var i=0;i<this.res.length;i++){
+        //         for(var j=0;j<this.goods.length;j++){
+        //             if(this.res[i].id==this.goods[j].id){
+        //                 str+=``;
+        //             }
+        //         }
+        //     }
+        // }
+        init(){
+            var that = this;
+            this.sBox.onmouseover = function(){
+                that.over()
+            }
+            this.sBox.onmousemove = function(eve){
+                var e = eve || window.event;
+                that.move(e)
+            }
+            this.sBox.onmouseout = function(){
+                that.out()
+            }
+        }
+        over(){
+//				*2.鼠标进入让图片模糊
+            this.sImg.style.opacity = "0.6";
+            
+            
+            this.sSpan.style.display = "block";
+            this.bBox.style.display = "block";
+            
+            this.sSpanW = (this.bBox.offsetWidth / this.bImg.offsetWidth * this.sBox.offsetWidth);
+            this.sSpanH = (this.bBox.offsetHeight / this.bImg.offsetHeight * this.sBox.offsetHeight);
+            
+            this.sSpan.style.width = this.sSpanW + "px";
+            this.sSpan.style.height = this.sSpanH + "px";
+            
+            this.sW = this.sBox.offsetWidth;
+            this.sH = this.sBox.offsetHeight;
+
+            this.bW = this.bBox.offsetWidth;
+            this.bH = this.bBox.offsetHeight;
+
+            this.bImgW = this.bImg.offsetWidth;
+            this.bImgH = this.bImg.offsetHeight;
+        }
+        move(e){
+            var l = e.clientX - this.sBox.offsetLeft - this.sSpan.offsetWidth/2;
+            var t = e.clientY - this.sBox.offsetTop - this.sSpan.offsetHeight/2;
+            if(l<0) l=0;
+            if(t<0) t=0;
+            if(l>this.sW - this.sSpanW){
+                l = this.sW - this.sSpanW;
+            }
+            if(t>this.sH - this.sSpanH){
+                t = this.sH - this.sSpanH;
+            }
+            this.sSpan.style.left = l + "px";
+            this.sSpan.style.top = t + "px";
+            this.bImg.style.left = l / (this.sW - this.sSpanW) * (this.bW - this.bImgW) + "px";
+            this.bImg.style.top = t / (this.sH - this.sSpanH) * (this.bH - this.bImgH) + "px";
+            
+//				*4.设置span的背景图的位置为当前移动的位置，取反
+            this.sSpan.style.backgroundPositionX = -l + "px";
+            this.sSpan.style.backgroundPositionY = -t + "px";
+
+        }
+        out(){
+//				*3.鼠标进入让图片清晰
+            this.sImg.style.opacity = "1";
+            
+            this.sSpan.style.display = "none";
+            this.bBox.style.display = "none";
+        }
+    }
+    
+    new Magnifier();
+    
+    
+    
+//		比例计算的思路：
+
+//		小数/大数 = 比例
+//		咱班有78人,找8个出去干活,问,出去的人,占比多少?
+//		小框中有一个移动的滑块,一共可以移动(框.width-滑块.width),移动了(l),问移动的距离,占比多少?
+    
+//		比例 * 大数 = 小数
+//		隔壁班有89人,为了公平,需要排出同比例的人数,出去干活,问需要出多少人?
+//		隔壁又有个框里面有张图,一共可以移动(框.width-图.width),需要移动同比例的距离,问需要移动多少    
+</script>
+</html>

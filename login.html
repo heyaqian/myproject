@@ -56,57 +56,73 @@
     </div><a href="https://m.kuaidi100.com/" target="_blank">快递查询</a>
 </div>
 </body>
+<script src="js/cookie.js"></script>
 <script>
 class login{
     constructor(){        
         this.user=document.getElementById("user");
+        this.remember=document.getElementById("remember");
         this.pass=document.getElementById("pass");
         this.login=document.getElementById("login");
-        this.register=document.getElementById("register");
-      
+        this.register=document.getElementById("register"); 
         this.addEvent();
     }
     addEvent(){
         var that=this;
         this.register.onclick=function(){
             location.href="register.html";
-            console.log(1);          
+            // console.log(1);          
         }
         this.login.onclick=function(){
             that.u=that.user.value;
             that.p=that.pass.value;
+            // that.isRember();
             that.getMsg();
         }
     }
-    getMsg(){
-        var that=this;
-                ajaxGet("http://127.0.0.1:82/api",function(res){
-                    that.res=JSON.parse(res)
-                    console.log(that.res);
-                },{
-                    type:"login",
-                    user:this.u,
-                    pass:this.p
-                })
-				}
-			}			
-			new login;      	
-        	function ajaxGet(url,cb,data){
-				data = data || {};
-				var str = "";
-				for(var i in data){
-					str = str + i+"="+data[i]+"&";
-				}
-				var d = new Date();
-				url = url + "?" + str + "__qft="+d.getTime();
-				var xhr = new XMLHttpRequest();
-				xhr.open("get",url,true);
-				xhr.onreadystatechange = function(){
-					if(xhr.readyState == 4 && xhr.status == 200){
-						cb(xhr.responseText);
-					}
-				}
-				xhr.send();
+    // isRember(){
+    //     if(this.remember.checked){
+    //         var obj = {
+    //             user:this.u,
+    //             pass:this.p
+    //         }
+    //         setCookie("userMsg",JSON.stringify(obj),{
+    //             expires:7
+    //         })
+    //     }
+	// 		}
+    getMsg(){       
+        this.msg = getCookie("userMsg") ? JSON.parse(getCookie("userMsg")) : [];  
+        console.log(this.msg);             
+        var type = 0;
+        for(var i=0;i<this.msg.length;i++){
+            if(this.msg[i].user == this.u && this.msg[i].pass == this.p){
+                location.href = "index.html";
+                this.msg[i].onoff = 1;
+                if(this.remember.checked){
+                    var obj = {
+                            user:this.u,
+                            pass:this.p
+                        }
+                        setCookie("userMsg",JSON.stringify(obj),{
+                                expires:7
+                            })
+                }else{
+                    setCookie("userMsg",JSON.stringify(this.msg))
+                }
+                type = 1;
+            }else if(this.msg[i].user == this.u && this.msg[i].pass != this.p){
+                // this.span.innerHTML = "密码错误";
+                alert("密码错误");
+                type = 2;
             }
+        }
+        if(type == 0){
+            // this.span.innerHTML = "用户名不存在,请<a href='register.html'>注册</a>";
+            alert("用户名不存在");
+        }
+    }
+}			
+	new login;      	
  </script>
 </html>

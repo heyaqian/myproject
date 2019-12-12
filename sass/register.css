@@ -83,13 +83,13 @@ html, body {
   color: #f00;
 }
 
-.want_login {
+.content_body .want_login {
   clear: both;
   text-align: center;
   margin-top: 16px;
 }
 
-.want_login .loginnow {
+.content_body .want_login .loginnow {
   color: #FDB14F;
 }
 

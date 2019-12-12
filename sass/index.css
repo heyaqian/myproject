@@ -408,6 +408,7 @@ main .main-novel-p .novel-p-r .novel-r-t .box, main .main-novel-p .novel-p-r .no
   border-radius: 12px;
   padding: 30px 20px 20px 20px;
   text-align: center;
+  margin-left: 12px;
 }
 
 main .main-novel-p .novel-p-r .novel-r-t .box img, main .main-novel-p .novel-p-r .novel-r-b .box img, main .main-magazine-p .novel-p-r .novel-r-t .box img, main .main-magazine-p .novel-p-r .novel-r-b .box img {

@@ -16,7 +16,7 @@ http.createServer((req,res)=>{
 				fileHandle(req,res);
 		}
 	}
-}).listen("83","127.0.0.1");
+}).listen("83","127.0.0.2");
 
 //设计地址:
 //	假设:具有文件响应，能注册，能登陆的服务器

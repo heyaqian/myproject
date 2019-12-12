@@ -124,6 +124,7 @@ nav .search form .sub {
   height: 46px;
   width: 60px;
   border: none;
+  cursor: pointer;
 }
 
 footer {

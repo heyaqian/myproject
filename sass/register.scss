@@ -66,14 +66,15 @@ html,body{background: #f5f5f5;text-align: center;}
               
             }
         }
+        .want_login{
+            clear: both;
+            text-align: center;
+            margin-top: 16px;
+            .loginnow{color:#FDB14F;}
+        }
 }
 
-.want_login{
-    clear: both;
-    text-align: center;
-    margin-top: 16px;
-    .loginnow{color:#FDB14F;}
-}
+
 .footer-b{
     text-align: center;
     line-height: 25px;
