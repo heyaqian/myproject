@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="pub/pub.css">
     <link rel="stylesheet" href="css/public.css"> 
 </head>
 <body>
@@ -23,11 +24,11 @@
     </div>
     <script src="libs/jquery.js"></script>
     <script type="text/javascript">
-        $(function(){
+        //   $(function(){
             $(".top").load("http://localhost:81/pub/pub.html .top" )
 
             $(".footer").load("http://localhost:81/pub/pub.html .footer" );
-        });
+        // });
     </script>
     <section>
         <div class="margin clear banner box">
@@ -137,10 +138,10 @@
 <script src="js/ajax.js"></script>
 <script src="js/jquery.banner.js"></script>
 <!-- <script src="js/index.js"></script> -->
-<script>
+<script> 
     class list{
     constructor(){
-        this.fr=document.querySelector(".fr");
+        this.fr=document.querySelector(".fr");      
         this.daily=document.querySelector(".daily-b");
         this.story=document.querySelector(".daily-b");
         this.novelrt=document.querySelector(".novel-r-t");
@@ -156,6 +157,7 @@
         this.loadd();
         this.loads();
         this.loadm();
+        
     }
     load(){
         var that=this;
@@ -167,10 +169,10 @@
     }
     loadd(){
         var that=this;
-        ajaxGet(this.urld,function(res){
-           
+        
+        ajaxGet(this.urld,function(res){          
             that.res=JSON.parse(res);
-            that.displayd();
+            that.displayd( that.xlkuang);
         })
     }
     loads(){
@@ -253,6 +255,11 @@
        
         // 将数据插入页面中cont,innerHTML可以渲染页面
         this.daily.innerHTML=str;
+        this.xlkuang=document.querySelector(".xlkuang");
+        //在这里获取不会有回调函数的问题，ajax获取值得问题，异步
+        // console.log(this.xlkuang,5555);
+        this.xlkuang.innerHTML=str;
+        
     }
      displays(){
         //查看数据
@@ -295,7 +302,10 @@
     }
 
 }
+//window.onload=function(){
     new list;
+// }
+    
 
     $(".menu").find("li").mouseover(function(){
         // console.log($(".menu"));     
@@ -369,24 +379,46 @@
                 right:0,
                 width:0
             })
-         }) 
-    
-window.onload=function(){
-    // console.log( $("#search").length);
-    console.log( $("#search"));
-    // $("#search").css('color','red');
-    $("#search").click(function(){
-        console.log(1);
-        // $(location).attr("href","list.html");
-        window.location.href = "list.html";
-        // window.location.reload(); 
-    });   
-}
+         })   
+    this.search=document.querySelector("#search");
+    // this.ipt=document.querySelector(".ipt");
+    //  console.log(this.ipt);
+    this.search.onclick=function(){
+        location.href="list.html";
+        // setCookie("searchval",JSON.stringify())
+    }
+
+// window.onload=function(){
+//     // console.log( $("#search").length);
+//     console.log( $("#search"));
+//     // $("#search").css('color','red');
+//     $("#search").click(function(){
+//         console.log(1);
+//         // $(location).attr("href","list.html");
+//         window.location.href = "list.html";
+//         // window.location.reload(); 
+//     });   
+// }   //这一行只能跳转一次
  
     window.onload=function(){
         console.log($(".streg")); 
         $(".streg").mouseenter(function(){
-            console.log(1);   
+            // console.log(1);   
+            $(".xlkuang").css({
+                top:120,
+                height:0,
+            }).stop().animate({
+                top:120,
+                height:240,
+            }).mouseleave(function(){
+                $(".xlkuang").css({
+                top:120,
+                height:240,
+            }).stop().animate({
+                top:120,
+                height:0,
+            })
+         })
     });   
 }
 

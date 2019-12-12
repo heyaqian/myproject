@@ -101,6 +101,44 @@ nav p span {
   text-align: center;
 }
 
+nav .xlkuang {
+  width: 1226px;
+  height: 0px;
+  background: #fff;
+  color: #FDB14F;
+  position: absolute;
+  top: 120px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  overflow: hidden;
+}
+
+nav .xlkuang p.name, nav .xlkuang p.price {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 192px;
+  text-align: center;
+  font: 12px/22px "";
+  color: #333;
+  padding: 15px 0 0;
+}
+
+nav .xlkuang p.name:hover, nav .xlkuang p.price:hover {
+  color: #FDB14F;
+}
+
+nav .xlkuang p.price {
+  color: #FDB14F;
+  padding: 6px;
+}
+
+nav .xlkuang img {
+  width: 160px;
+  height: 160px;
+  margin-left: 30px;
+}
+
 nav .search {
   float: right;
 }

@@ -1,5 +1,4 @@
 $color: #FDB14F;
-
 .margin{margin:0 auto;width:1226px;}
 header{
     color: #FDB14F;font: 12px/30px "";height: 30px;padding-right: 11px;border-bottom:solid 2px #FDB14F;
@@ -47,12 +46,15 @@ nav {
             cursor: pointer;
             font-size: 16px;
             text-align: center;
-        }
-        // i{}
+        }       
+    }
+    .xlkuang{width: 1226px;height: 0px;background: #fff;color:#FDB14F;position: absolute;top:120px;z-index:5;display: flex;justify-content: space-around;overflow: hidden;
+        p.name{white-space:nowrap;overflow:hidden;width: 192px;text-align: center;font:12px/22px "";color:#333;padding:15px 0 0;&:hover{color:#FDB14F;}}
+        p.price{@extend p.name;color:#FDB14F;padding:6px;}
+        img{width: 160px;height: 160px;margin-left: 30px;}       
     }
     .search{
         float: right;
-        // #search{}
         form{ 
             margin-top: 23px;
             border: solid 1px #ddd;overflow: hidden;border-radius: 7px;         

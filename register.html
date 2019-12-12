@@ -86,16 +86,17 @@ class register{
         this.register=document.getElementById("register");
         this.tel=document.getElementById("tel");
         this.span=document.getElementById("reg");
-        // this.n=this.b=this.s=0;   
+        this.a=this.b=this.c=this.d=0;   
         this.addEvent();
     }
     addEvent(){
         var that=this;
         that.user.oninput = function(){
-            console.log(1);           
+            // console.log(1);           
         var reg = /^[\u2E80-\u9FFF\w\-]{4,20}$/;
         if(reg.test(that.user.value)){
             that.user.nextElementSibling.innerHTML = "用户名正确";
+            that.a=1;
             // u = true;
         }else{
             that.user.nextElementSibling.innerHTML = "用户名不正确";
@@ -125,6 +126,7 @@ class register{
         if(that.pass.value == that.repass.value){
             that.repass.nextElementSibling.innerHTML = "一致";
             // p2 = true;
+            that.b=1;
         }else{
             that.repass.nextElementSibling.innerHTML = "不一致";
             // p2 = false;
@@ -133,6 +135,7 @@ class register{
     this.repass.oninput = function(){
         if(that.pass.value == that.repass.value){
             that.repass.nextElementSibling.innerHTML = "一致";
+            that.b=1;
             // p2 = true;
         }else{
             that.repass.nextElementSibling.innerHTML = "不一致";
@@ -146,6 +149,7 @@ class register{
     var reg=/^[\da-zA-Z][\w-]+@[\da-z]+\.[\da-z]+$/;
     if(reg.test(this.value)){
         this.nextElementSibling.innerHTML="正确";
+        this.c=1;
         // e=1;
     }else{
         this.nextElementSibling.innerHTML="不正确";
@@ -155,17 +159,22 @@ class register{
         var reg=/^(\+86)?1\d{10}$/;
     if(reg.test(this.value)){
         this.nextElementSibling.innerHTML="正确";
+        this.d=1;
         // e=1;
     }else{
         this.nextElementSibling.innerHTML="不正确";
         }
     }   
+    // if(this.a+this.b+this.c+this.d==4){
         this.register.onclick=function(){
             that.u=that.user.value;
             that.p=that.pass.value;          
             that.setMsg();
             // console.log(1);
-        }
+            }
+        // }else{
+            // alert("请完善信息");
+        // }
     }
     setMsg(){
 //	数据格式:[{user:"admin",pass:"123",onoff:0},{...},{...},...]
@@ -205,7 +214,7 @@ class register{
             location.href = "login.html";
         },5000)
     }
-    }          
+}          
     new register;      	
 </script>
 </html>
