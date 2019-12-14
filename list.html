@@ -33,12 +33,12 @@
         </div>
         <!-- <ul class="list" id="list">    
             </ul> -->
-            <div class="pagWarp" id="pageWarp">
+            <!-- <div class="pagWarp" id="pageWarp">
                 <li id="btnL">上一页</li>
                 <ul id="ull">
                 </ul>
                 <li id="btnR">下一页</li>
-            </div>
+            </div> -->
             <!-- <div class="pay"></div> -->
     <div class="footer">
 
@@ -53,141 +53,166 @@
             // console.log(this.cont);   
             this.left=document.getElementById("btnL");
             this.right=document.getElementById("btnR");     
-            this.pageCont=document.getElementById("ull")
-            this.url="http://localhost:81/data/goods-yz.json";           
+            this.pageCont=document.getElementById("ull");
+            this.url="http://localhost:81/data/story.json";           
             this.index=1;
             this.num=4;
             this.load();
-            this.addEvent();
-            this.addEvent2();
+            // this.addEvent();
+            // this.addEvent2();
         }
         load(){
             var that=this;
             ajaxGet(this.url,function(res){
                 console.log(JSON.parse(res));
-                that.res=JSON.parse(res);
-                that.display();
-                that.createPage()
+                that.res=JSON.parse(res);              
+                that.getCookie();
+                // that.createPage()
                 // console.log(1);
             })
         }
-        createPage(){            
-        this.maxNum=Math.ceil(this.res.length/this.num);
-        // console.log(this.maxNum);      
-        var str="";
-        for(var i=0;i<this.maxNum;i++){
-            str+=`<li>${i+1}</li>`
-        }
-        this.pageCont.innerHTML=str;
-        this.setActive();
-    }
-  
-        addEvent2(){
-        var that=this;
-        this.right.onclick=function(){
-          that.changeIndexR();
-        }   
-        this.left.onclick=function(){
-          that.changeIndexL();
-        }
-    }
-    changeIndexR(){
-        if(this.index==this.maxNum-1){
-                this.index=0;
-            }else{
-                this.index++;
-            }
+        getCookie(){
+            // this.goods=getCookie("goodsDECookie")?JSON.parse(getCookie("goodsDECookie")):[];
+            this.msgid=getCookie("goodsDECookie")?JSON.parse(getCookie("goodsDECookie")):[];
+            console.log(this.msgid);          
             this.display();
-            this.setActive();
-    }
-    changeIndexL(){
-        if(this.index==0){
-                this.index=this.maxNum-1;
-            }else{
-                this.index--;
-            }
-            this.display();
-            this.setActive();
-    }
-    setActive(){       
-        for(var i=0;i<this.maxNum;i++){
-            this.pageCont.children[i].className="";
         }
-        // console.log(this.pageCont.children[i]);
-        console.log(this.index);
-        
-        this.pageCont.children[this.index].className="active";
-
-    }
         display(){
             var str="";
-            for(var i=this.index*this.num;i<(this.index+1)*this.num;i++){
-                if(i<this.res.length){
-                    str+=`<div class="box" index="${this.res[i].id}">
-                            <img src="${this.res[i].url}" alt="">
-                            <p class="name">${this.res[i].name}</p>
-                            <p class="price">${this.res[i].price}</p>
+                console.log( this.res);
+                console.log( this.msgid);
+                for(var i=0;i<this.msgid.length;i++){
+                    for(var j=0;j<this.res.length;j++){
+                    if(this.msgid[i]==this.res[j].id){
+                    str+=`<div class="box" index="${this.res[j].id}">
+                            <img src="${this.res[j].url}" alt="">
+                            <p class="name">${this.res[j].name}</p>
+                            <p class="price">${this.res[j].price}</p>
                             <p class="addcar">加入购物车</p>
                         </div>`             
-                }
+                    }
+                }               
                 //q 下面少写了index                           
             }
             this.cont.innerHTML=str;
         }
-        addEvent(){
-            var that=this;
-            //页面初始没有按钮em，所有要用事件委托，将事件监听绑定给父元素cont
-            this.cont.addEventListener("click",function(eve){
-                var e=eve || window.event;
-                var target=e.target || e.srcElement;               
-                // console.log(target);              
-                // 判断点击的是否是em
-                if(target.className=="addcar"){
-                    // // 根据所点击的em找到它爸爸div身上存储goodsId的index属性，用来定位所选商品
-                    that.id=target.parentNode.getAttribute("index");
-                    // // 把点击的数据存储到cookie中，让下个页面获取
-                    that.setCookie();
-                    // console.log(target);                   
-                }
-                // console.log(target.tagName);              
-                if(target.tagName=="IMG"){
-                    that.id=target.parentNode.getAttribute("index");
-                    location.href="detail.html";
-                    // console.log(2);                  
-                }
-            })               
-        }
-        setCookie(){
-            // 判断是否是第一次加入购物车，没有值就给空数组，有就解析 
-            this.goods=getCookie("goodsDECookie")? JSON.parse(getCookie("goodsDECookie")):[];
-            // 如果length<1，代表没有数据,没有数据没办法遍历，所以要判断，是第一次加入，直接加入
-            if(this.goods.length<1){
-                // 将数据存入数组内，存商品的id和数量
-                this.goods.push({
-                    id:this.id,
-                    num:1,
-                    check:0
-                })
-            }else{
-                //有第二种方法，参考自己的案例 
-                var i=0;
-                var onoff=this.goods.some((val,idx)=>{
-                    i=idx;
-                    return val.id===this.id;
-                })
-                if(!onoff){
-                    this.goods.push({
-                        id:this.id,
-                        num:1,
-                        check:0
-                    })
-                }else{
-                    this.goods[i].num++;
-                }
-            }
-            // 操作完获取的cookie之后，再将cookie塞进去
-            setCookie("goodsDECookie",JSON.stringify(this.goods))
-        }
+    //     createPage(){            
+    //     this.maxNum=Math.ceil(this.res.length/this.num);
+    //     // console.log(this.maxNum);      
+    //     var str="";
+    //     for(var i=0;i<this.maxNum;i++){
+    //         str+=`<li>${i+1}</li>`
+    //     }
+    //     this.pageCont.innerHTML=str;
+    //     this.setActive();
+    // }
+  
+    //     addEvent2(){
+    //     var that=this;
+    //     this.right.onclick=function(){
+    //       that.changeIndexR();
+    //     }   
+    //     this.left.onclick=function(){
+    //       that.changeIndexL();
+    //     }
+    // }
+    // changeIndexR(){
+    //     if(this.index==this.maxNum-1){
+    //             this.index=0;
+    //         }else{
+    //             this.index++;
+    //         }
+    //         this.display();
+    //         this.setActive();
+    // }
+    // changeIndexL(){
+    //     if(this.index==0){
+    //             this.index=this.maxNum-1;
+    //         }else{
+    //             this.index--;
+    //         }
+    //         this.display();
+    //         this.setActive();
+    // }
+    // setActive(){       
+    //     for(var i=0;i<this.maxNum;i++){
+    //         this.pageCont.children[i].className="";
+    //     }
+    //     // console.log(this.pageCont.children[i]);
+    //     console.log(this.index);
+        
+    //     this.pageCont.children[this.index].className="active";
+
+    // }
+        // display(){
+        //     var str="";
+        //     for(var i=this.index*this.num;i<(this.index+1)*this.num;i++){
+        //         if(i<this.res.length){
+        //             str+=`<div class="box" index="${this.res[i].id}">
+        //                     <img src="${this.res[i].url}" alt="">
+        //                     <p class="name">${this.res[i].name}</p>
+        //                     <p class="price">${this.res[i].price}</p>
+        //                     <p class="addcar">加入购物车</p>
+        //                 </div>`             
+        //         }
+        //         //q 下面少写了index                           
+        //     }
+        //     this.cont.innerHTML=str;
+        // }
+    //     addEvent(){
+    //         var that=this;
+    //         //页面初始没有按钮em，所有要用事件委托，将事件监听绑定给父元素cont
+    //         this.cont.addEventListener("click",function(eve){
+    //             var e=eve || window.event;
+    //             var target=e.target || e.srcElement;               
+    //             // console.log(target);              
+    //             // 判断点击的是否是em
+    //             if(target.className=="addcar"){
+    //                 // // 根据所点击的em找到它爸爸div身上存储goodsId的index属性，用来定位所选商品
+    //                 that.id=target.parentNode.getAttribute("index");
+    //                 // // 把点击的数据存储到cookie中，让下个页面获取
+    //                 that.setCookie();
+    //                 // console.log(target);                   
+    //             }
+    //             // console.log(target.tagName);              
+    //             if(target.tagName=="IMG"){
+    //                 that.id=target.parentNode.getAttribute("index");
+    //                 location.href="detail.html";
+    //                 // console.log(2);                  
+    //             }
+    //         })               
+    //     }
+    //     setCookie(){
+    //         // 判断是否是第一次加入购物车，没有值就给空数组，有就解析 
+    //         this.goods=getCookie("goodsDECookie")? JSON.parse(getCookie("goodsDECookie")):[];
+    //         // 如果length<1，代表没有数据,没有数据没办法遍历，所以要判断，是第一次加入，直接加入
+    //         if(this.goods.length<1){
+    //             // 将数据存入数组内，存商品的id和数量
+    //             this.goods.push({
+    //                 id:this.id,
+    //                 num:1,
+    //                 check:0
+    //             })
+    //         }else{
+    //             //有第二种方法，参考自己的案例 
+    //             var i=0;
+    //             var onoff=this.goods.some((val,idx)=>{
+    //                 i=idx;
+    //                 return val.id===this.id;
+    //             })
+    //             if(!onoff){
+    //                 this.goods.push({
+    //                     id:this.id,
+    //                     num:1,
+    //                     check:0
+    //                 })
+    //             }else{
+    //                 this.goods[i].num++;
+    //             }
+    //         }
+    //         // 操作完获取的cookie之后，再将cookie塞进去
+    //         setCookie("goodsDECookie",JSON.stringify(this.goods))
+    //     }
     }
     new list;
 

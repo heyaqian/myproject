@@ -20,14 +20,51 @@
     <div class="backT">置顶</div>
   <!-- </div> -->
     <div class="top">
-
+        <header>
+            <div class="margin clear">
+                <div class="top-l">
+                    <p>                
+                        <span class="log"><a href="login.html">登录</a></span>
+                        <span class="reg"><a href="register.html">注册</a></span>
+                    </p>
+                </div>
+                <div class="top-r">
+                    <ul>
+                        <li class="li1">我的订单</li>
+                        <li class="li2">新手指南</li>
+                        <li class="li3"><i></i>收藏本站</li>
+                        <li class="li4"><i></i>微信扫一扫<div><img src="images/ma.png"></div></li>                 
+                    </ul>
+                </div>
+        </header>
+        <nav>
+            <div class="margin clear nav">            
+                <a class="logo"><img src="images/logo.png"></a>
+                <p class="streg">
+                    <span>热门周边</span>
+                    <span>最热漫画</span>
+                    <span>优秀小说</span>                        
+                </p>
+                <div class="xlkuang">
+                   
+                </div>
+                <div class="search">
+                    <form>
+                        <input type="text" placeholder="请输入关键字搜索" class="txt" value=""/>
+                       <input type="button" name="" id="search" class="sub">
+                    </form>
+                </div>                   
+            </div>
+        </nav>
     </div>
     <script src="libs/jquery.js"></script>
     <script type="text/javascript">
-        //   $(function(){
-            $(".top").load("http://localhost:81/pub/pub.html .top" )
+        // setInterval(()=>{
+          $(function(){
+            // $(".top").load("http://localhost:81/pub/pub.html .top" )
 
             $(".footer").load("http://localhost:81/pub/pub.html .footer" );
+        })
         // });
     </script>
     <section>
@@ -137,7 +174,7 @@
  <script src="libs/jquery.js"></script>
 <script src="js/ajax.js"></script>
 <script src="js/jquery.banner.js"></script>
-<!-- <script src="js/index.js"></script> -->
+<script src="js/cookie.js"></script>
 <script> 
     class list{
     constructor(){
@@ -149,15 +186,40 @@
         this.magazinet=document.querySelector(".main-magazine-p .novel-p-r .novel-r-t");
         this.magazineb=document.querySelector(".main-magazine-p .novel-p-r .novel-r-b");
         // console.log(this.cont);   
+        this.search=document.querySelector("#search");
+        this.ipt=document.querySelector(".txt");
+        // console.log(this.search);
         this.url="http://localhost:81/data/nav.json";           
         this.urld="http://localhost:81/data/daily.json";           
         this.urls="http://localhost:81/data/story.json";
-        this.urlm="http://localhost:81/data/magezine.json";
+        this.urlm="http://localhost:81/data/magezine.json";       
         this.load();
         this.loadd();
         this.loads();
-        this.loadm();
+        this.loadm();       
+    }
+    addEvent(){
+        var that=this;
+        console.log(this.res1);
         
+        this.search.onclick=function(){ 
+            that.value=that.ipt.value;
+            // console.log(that.ipt.value);
+            that.goods=[];
+            for(var i=0;i<that.res1.length;i++){
+            // console.log(that.res[i].name);
+                if(that.res1[i].name.includes(that.value)){
+                    // console.log(that.res[i].id);                   
+                    // that.id=that.res[i].id;                   
+                    that.goods.push(
+                        that.res1[i].id 
+                    );                 
+                    // console.log(that.goods);                     
+                    setCookie("goodsDECookie",JSON.stringify(that.goods));
+                    location.href="list.html";
+                }
+            }     
+         }
     }
     load(){
         var that=this;
@@ -177,10 +239,11 @@
     }
     loads(){
         var that=this;
-        ajaxGet(this.urls,function(res){
-
-            that.res=JSON.parse(res);
+        ajaxGet(this.urls,function(res1){
+            that.res1=JSON.parse(res1);
+            console.log(that.res1); 
             that.displays();
+            that.addEvent()
         })
     }
     loadm(){
@@ -258,38 +321,37 @@
         this.xlkuang=document.querySelector(".xlkuang");
         //在这里获取不会有回调函数的问题，ajax获取值得问题，异步
         // console.log(this.xlkuang,5555);
-        this.xlkuang.innerHTML=str;
-        
+        this.xlkuang.innerHTML=str;       
     }
      displays(){
         //查看数据
-        console.log(this.res);
-        console.log(this.res[1].url);       
+        console.log(this.res1);
+        console.log(this.res1[1].url);       
         var str="";
         var str2="";
         for(var i=0;i<4;i++){
             // goodsId点击按钮定位商品
         str+=`<div class="box">
-                <img src="${this.res[i].url}" alt="">
-                <p class="name">${this.res[i].name}</p>
-                <p class="price">${this.res[i].price}</p>
+                <img src="${this.res1[i].url}" alt="">
+                <p class="name">${this.res1[i].name}</p>
+                <p class="price">${this.res1[i].price}</p>
             </div>             `;           
         }
-        for(var i=4;i<this.res.length-1;i++){
+        for(var i=4;i<this.res1.length-1;i++){
             str2+=`<div class="box">
-                <img src="${this.res[i].url}" alt="">
-                <p class="name">${this.res[i].name}</p>
-                <p class="price">${this.res[i].price}</p>
+                <img src="${this.res1[i].url}" alt="">
+                <p class="name">${this.res1[i].name}</p>
+                <p class="price">${this.res1[i].price}</p>
             </div>`;           
         }
-        for(var i=this.res.length-1;i<this.res.length;i++){
+        for(var i=this.res1.length-1;i<this.res1.length;i++){
             str2+=`<div class="box-last">
                     <div class="t">
                         <div class="l">
-                            <p class="name-l">${this.res[i].name}</p>
-                            <p class="price-l">${this.res[i].price}</p>
+                            <p class="name-l">${this.res1[i].name}</p>
+                            <p class="price-l">${this.res1[i].price}</p>
                         </div>
-                        <div class="r"><img src="${this.res[i].url}" alt=""></div>
+                        <div class="r"><img src="${this.res1[i].url}" alt=""></div>
                     </div>
                     <div class="b">
                         <img src="images/more_white.png" alt="" class="more">
@@ -380,13 +442,13 @@
                 width:0
             })
          })   
-    this.search=document.querySelector("#search");
-    // this.ipt=document.querySelector(".ipt");
-    //  console.log(this.ipt);
-    this.search.onclick=function(){
-        location.href="list.html";
+    
+    
+    // this.search.onclick=function(){       
+        // console.log(this.ipt.value);       
+        // location.href="list.html";
         // setCookie("searchval",JSON.stringify())
-    }
+    // }
 
 // window.onload=function(){
 //     // console.log( $("#search").length);
